@@ -1,0 +1,236 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #ffeef8 0%, #ffe0f0 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Floating hearts background animation */
+.heart-bg {
+    position: absolute;
+    font-size: 20px;
+    opacity: 0.6;
+    animation: float-up 8s infinite;
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Main container */
+.container {
+    text-align: center;
+    background: white;
+    padding: 60px 40px;
+    border-radius: 30px;
+    box-shadow: 0 20px 60px rgba(255, 105, 180, 0.3);
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    z-index: 10;
+}
+
+/* Main question heading */
+h1 {
+    color: #ff1493;
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Button container */
+.button-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    min-height: 80px;
+}
+
+/* Button styles */
+button {
+    padding: 15px 40px;
+    font-size: 1.3em;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Yes button */
+.yes-btn {
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff1493 100%);
+    color: white;
+}
+
+.yes-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(255, 20, 147, 0.4);
+}
+
+.yes-btn:active {
+    transform: scale(0.95);
+}
+
+/* No button */
+.no-btn {
+    background: linear-gradient(135deg, #ffa0c9 0%, #ff69b4 100%);
+    color: white;
+    position: absolute;
+}
+
+/* Celebration section - hidden by default */
+.celebration {
+    display: none;
+    animation: slideIn 0.8s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.celebration h2 {
+    color: #ff1493;
+    font-size: 2.2em;
+    margin-bottom: 30px;
+}
+
+/* Valentine image container */
+.valentine-image {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto 20px;
+}
+
+/* SVG hearts and confetti animation */
+.hearts-container {
+    position: relative;
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+.animated-heart {
+    position: absolute;
+    font-size: 30px;
+    animation: heartFloat 3s ease-in-out infinite;
+}
+
+.animated-heart:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.animated-heart:nth-child(2) {
+    left: 30%;
+    animation-delay: 0.5s;
+}
+
+.animated-heart:nth-child(3) {
+    left: 50%;
+    animation-delay: 1s;
+}
+
+.animated-heart:nth-child(4) {
+    left: 70%;
+    animation-delay: 1.5s;
+}
+
+.animated-heart:nth-child(5) {
+    left: 90%;
+    animation-delay: 2s;
+}
+
+@keyframes heartFloat {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-50px) scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+/* Confetti styles */
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #ff1493;
+    animation: confettiFall 3s linear infinite;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(300px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Hidden class */
+.hidden {
+    display: none;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.8em;
+    }
+    
+    button {
+        padding: 12px 30px;
+        font-size: 1.1em;
+    }
+    
+    .container {
+        padding: 40px 20px;
+    }
+}
