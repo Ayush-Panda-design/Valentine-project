@@ -7,6 +7,19 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Welcome onboarding banner (shown once to first-time visitors) -->
+    <div id="welcome-banner" class="welcome-banner" role="region" aria-label="Welcome message" hidden>
+        <div class="welcome-banner__content">
+            <span class="welcome-banner__icon" aria-hidden="true">💌</span>
+            <div class="welcome-banner__text">
+                <strong class="welcome-banner__title">Welcome to Be My Valentine! 💖</strong>
+                <span class="welcome-banner__message">New here? Tap the “Yes” button to unlock a sweet surprise.</span>
+            </div>
+            <a href="#question-section" class="welcome-banner__cta" id="welcome-banner-cta">Get started 💝</a>
+        </div>
+        <button type="button" class="welcome-banner__close" id="welcome-banner-close" aria-label="Dismiss welcome banner">✕</button>
+    </div>
+
     <!-- Floating background hearts -->
     <div id="background-hearts"></div>
 

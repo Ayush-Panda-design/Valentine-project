@@ -66,7 +66,88 @@ function createConfetti() {
     }
 }
 
-// Initialize background hearts when page loads
+// ----- Welcome onboarding banner -----
+const WELCOME_BANNER_STORAGE_KEY = 'valentine_welcome_banner_dismissed';
+
+// Lightweight analytics hook. Pushes to dataLayer if present and logs for now;
+// swap in a real analytics provider later without touching call sites.
+function trackBannerEvent(eventName, detail) {
+    const payload = Object.assign(
+        { event: eventName, timestamp: new Date().toISOString() },
+        detail || {}
+    );
+    if (Array.isArray(window.dataLayer)) {
+        window.dataLayer.push(payload);
+    }
+    console.debug('[banner-analytics]', payload);
+}
+
+// Reading/writing dismissal state is wrapped because localStorage can throw
+// (e.g. private browsing / disabled storage). Failing open shows the banner.
+function isBannerDismissed() {
+    try {
+        return localStorage.getItem(WELCOME_BANNER_STORAGE_KEY) === 'true';
+    } catch (e) {
+        return false;
+    }
+}
+
+function persistBannerDismissed() {
+    try {
+        localStorage.setItem(WELCOME_BANNER_STORAGE_KEY, 'true');
+    } catch (e) {
+        // Storage unavailable: banner will reappear next session, which is acceptable.
+    }
+}
+
+function hideWelcomeBanner(persist) {
+    const banner = document.getElementById('welcome-banner');
+    if (!banner) return;
+
+    banner.hidden = true;
+    if (persist) {
+        persistBannerDismissed();
+        trackBannerEvent('welcome_banner_dismissed');
+    }
+}
+
+function initWelcomeBanner() {
+    const banner = document.getElementById('welcome-banner');
+    if (!banner) return;
+
+    // Display condition: only first-time visitors who have not dismissed it.
+    if (isBannerDismissed()) {
+        return;
+    }
+
+    banner.hidden = false;
+    trackBannerEvent('welcome_banner_viewed');
+
+    const closeBtn = document.getElementById('welcome-banner-close');
+    const cta = document.getElementById('welcome-banner-cta');
+
+    closeBtn.addEventListener('click', function() {
+        hideWelcomeBanner(true);
+    });
+
+    cta.addEventListener('click', function() {
+        trackBannerEvent('welcome_banner_cta_click', {
+            destination: cta.getAttribute('href')
+        });
+        // Dismiss after engagement so the prompt does not linger.
+        hideWelcomeBanner(true);
+    });
+
+    // Accessibility: allow Escape to dismiss while the banner is visible.
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !banner.hidden) {
+            hideWelcomeBanner(true);
+        }
+    });
+}
+
+// Initialize background hearts and onboarding banner when page loads
 window.onload = function() {
     createBackgroundHearts();
+    initWelcomeBanner();
 };
